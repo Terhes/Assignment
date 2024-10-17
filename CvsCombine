@@ -1,0 +1,42 @@
+import pandas as pd
+import re
+
+# Function to clean invalid characters
+def clean_text(text):
+    if isinstance(text, str):
+        cleaned_text = re.sub(r'[^\x00-\x7F]+', '', text)
+        return cleaned_text
+    return text
+
+# Read the filtered CSV files for Facebook, Google, and Website datasets
+df_facebook_filtered = pd.read_csv('facebook_dataset_filtered.csv')
+df_google_filtered = pd.read_csv('google_dataset_filtered.csv')
+df_website_filtered = pd.read_csv('website_dataset_filtered.csv')
+
+# Combine the DataFrames
+df_combined = pd.concat([df_facebook_filtered, df_google_filtered, df_website_filtered], ignore_index=True)
+
+# Clean each column of the DataFrame
+df_combined = df_combined.applymap(clean_text)
+
+# Rename the columns to standard names
+df_combined.rename(columns={
+    'categories': 'Category',
+    'address': 'Address',
+    'city': 'City',
+    'country_name': 'Country',
+    'phone': 'Phone',
+    'name': 'Name',
+}, inplace=True)
+
+# Reorder columns to the desired order
+df_combined = df_combined[['Category', 'Address', 'City', 'Country', 'Phone', 'Name']]
+
+# Replace all missing or empty values with the string "NaN"
+df_combined.fillna("NaN", inplace=True)
+
+# Removing duplicate rows from the dataset
+df_cleaned = df_combined.drop_duplicates(subset=['Category', 'Address', 'City', 'Country', 'Phone', 'Name'], keep='first')
+
+# Save the cleaned and combined DataFrame to a new CSV file
+df_combined.to_csv('combined_dataset.csv', index=False) 

@@ -1,0 +1,62 @@
+import pandas as pd
+
+# Facebook dataset
+
+# Read the CSV file for dataset
+df_facebook = pd.read_csv('facebook_dataset.csv')
+
+# Define the desired order of columns for dataset
+desired_order_facebook = ['categories', 'address', 'city', 'country_name', 'phone', 'name']
+remaining_cols_facebook = [col for col in df_facebook.columns if col not in desired_order_facebook]
+
+# Filter to keep only the columns in desired order
+existing_cols_facebook = [col for col in desired_order_facebook if col in df_facebook.columns]
+df_facebook_filtered = df_facebook[existing_cols_facebook]
+
+# Save the updated DataFrame with only the desired columns
+df_facebook_filtered.to_csv('facebook_dataset_filtered.csv', index=False)
+
+# Google dataset
+
+# Read the CSV file for dataset
+df_google = pd.read_csv('google_dataset.csv', on_bad_lines='skip')
+
+# Define the desired order of columns for dataset
+desired_order_google = ['categories', 'address', 'city', 'country_name', 'phone', 'name']
+
+# Create a dictionary to map the current column names to the desired column names explicitly
+current_columns_google = ['category', 'address', 'city', 'country_name', 'phone', 'name']
+rename_dict = dict(zip(current_columns_google, desired_order_google))
+
+# Rename the columns in the DataFrame
+df_google.rename(columns=rename_dict, inplace=True)
+
+# Filter to keep only the columns in desired order
+existing_cols_google = [col for col in desired_order_google if col in df_google.columns]
+df_google_filtered = df_google[existing_cols_google]
+
+# Save the updated DataFrame with only the desired columns
+df_google_filtered.to_csv('google_dataset_filtered.csv', index=False)
+
+# Website dataset
+
+# Read the CSV file for dataset with error handling
+df_website = pd.read_csv('website_dataset.csv', delimiter=';', on_bad_lines='skip')
+
+# Define the desired order of columns for Website dataset
+desired_order_website = ['categories', 'city', 'country_name', 'phone', 'name']
+
+# Create a dictionary to map the current column names to the desired column names explicitly
+current_columns_website = ['s_category', 'main_city', 'main_country', 'phone', 'legal_name']
+rename_dict_website = dict(zip(current_columns_website, desired_order_website))
+
+# Rename the columns in the DataFrame
+df_website.rename(columns=rename_dict_website, inplace=True)
+
+# Filter to keep only the columns in desired_order (if they exist in the DataFrame)
+existing_cols_website = [col for col in desired_order_website if col in df_website.columns]
+df_website_filtered = df_website[existing_cols_website]
+
+# Save the updated DataFrame with only the desired columns
+df_website_filtered.to_csv('website_dataset_filtered.csv', index=False)
+

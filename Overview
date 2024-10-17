@@ -1,0 +1,5 @@
+-In cele 3 fisiere .csv ce au filtered la finalul numelui, au fost extrase coloanele cu cel mai mare interes: Category, Address, City, Country, Phone, Company names
+-Cel de-al 4-lea dataset "combined_dataset.csv" contin informatiile companiilor din cele 3 surse diferite.
+
+-In CvsFilter se afla codul din spatele extragerii informatiilor din cele 3 surse si abordarea asupra lor.
+-In CvsCombine se afla codul imbinarii celor 3 surse si "curatarea" informatiilor, stergerea informatiilor "duplicate", si adaugarea termenului "NaN" in locul informatiilor inexistente.
